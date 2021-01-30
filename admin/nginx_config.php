@@ -7,11 +7,17 @@ function create_nginx_config($_domain)
 	$myConf .= "  server_name ". $_domain . ";"."\n";
 	// set custom header to detect this domain on code
 	$myConf .= "  root /var/www/html/test-arvan-cname/bucket;". "\n\n";
+
 	$myConf .= '  location / {'."\n";
 	$myConf .= '    try_files $uri $uri/ /index.php$is_args$args;'."\n";
-	$myConf .= '    add_header X-MrAdib-Domain "'. $_domain . '";'."\n";
-	$myConf .= '    add_header X-MrAdib-Domain2 test2";'."\n";
 	$myConf .= '  }'."\n";
+
+	$myConf .= '  location ~ \.php$ {'."\n";
+	$myConf .= '    include snippets/fastcgi-php.conf;'."\n";
+	$myConf .= '    fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;'."\n";
+	$myConf .= '    fastcgi_param X-MrAdib-Domain "'. $_domain . '";'."\n";
+	$myConf .= '  }'."\n";
+
 
 	$myConf .= "}";
 
