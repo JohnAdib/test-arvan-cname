@@ -40,12 +40,12 @@ function create_nginx_config($_domain)
 	echo("Save config file<br>");
 	file_put_contents($myFile, $myConf);
 	chmod($myFile, 0777);
-	changePermissionToRoot($myFile)
+	changePermissionToRoot($myFile);
 
 
 	echo("create shortcut on enable folder<br>");
 	exec("ln -s /etc/nginx/sites-available/". $_domain. " /etc/nginx/sites-enabled/");
-	changePermissionToRoot('/etc/nginx/sites-enabled/'. $_domain)
+	changePermissionToRoot('/etc/nginx/sites-enabled/'. $_domain);
 
 	// nginx config reload every minute with cronjob
 }
