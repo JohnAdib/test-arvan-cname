@@ -11,41 +11,38 @@ function create_nginx_config($_domain)
 	$myConf .= "}";
 
 	// show created config
-	echo "<pre>". $myConf. "</pre>";
+	echo "<pre>". $myConf. "</pre>". "<hr>";
 
-	if(!is_dir('/etc/nginx/site-available'))
+	if(!is_dir('/etc/nginx/sites-available'))
 	{
 		die("We need nginx!");
 	}
 
-	$mradib_config = "/etc/nginx/site-available/config-mradib.conf";
+	$mradib_config = "/etc/nginx/sites-available/config-mradib.conf";
 	if(!file_exists($mradib_config))
 	{
 		copy('config-mradib.conf', $mradib_config);
 	}
 
-	// save config
-	file_put_contents('/etc/nginx/site-available/'. $_domain, $myConf);
+	echo("Save config file<br>");
+	file_put_contents('/etc/nginx/sites-available/'. $_domain, $myConf);
 
-	// create shortcut on enable folder
-	exec("sudo ln -s /etc/nginx/sites-available/". $_domain. " /etc/nginx/sites-enabled/");
+	echo("create shortcut on enable folder<br>");
+	exec("ln -s /etc/nginx/sites-available/". $_domain. " /etc/nginx/sites-enabled/");
 
-	// @TODO test config is correct
-	// exec("nginx -t");
-
-	// reload nginx
-	exec("service nginx reload");
+	// nginx config reload every minute with cronjob
 }
 
 function read_domain_list()
 {
-	$domainList = glob("/etc/nginx/site-available/*.conf");
+	$domainList = glob("/etc/nginx/sites-available/*");
+	echo "<h2>List of domains</h2>";
 	echo "<pre>";
 	if($domainList)
 	{
 		foreach ($domainList as $filename)
 		{
-			echo $filename;
+			echo basename($filename). "\n";
 		}
 	}
 	else
@@ -53,6 +50,7 @@ function read_domain_list()
 		echo "There are no domain!";
 	}
 	echo "</pre>";
+	echo "<hr>";
 }
 
 ?>

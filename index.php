@@ -1,5 +1,6 @@
 <?php
 require_once "nginx_config.php";
+
 // show list of domains
 read_domain_list();
 
