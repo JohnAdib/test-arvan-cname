@@ -15,6 +15,7 @@ function create_nginx_config($_domain)
 	$myConf .= '  location ~ \.php$ {'."\n";
 	$myConf .= '    include snippets/fastcgi-php.conf;'."\n";
 	$myConf .= '    fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;'."\n";
+	$myConf .= '    fastcgi_param Dev MrAdib;'."\n";
 	$myConf .= '    fastcgi_param X-MrAdib-Domain "'. $_domain . '";'."\n";
 	$myConf .= '  }'."\n";
 
