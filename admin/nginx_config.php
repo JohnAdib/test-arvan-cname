@@ -6,8 +6,13 @@ function create_nginx_config($_domain)
 
 	$myConf .= "  server_name ". $_domain . ";"."\n";
 	// set custom header to detect this domain on code
-	$myConf .= "  root /var/www/html/test-arvan-cname/bucket;". "\n";
-	$myConf .= '  add_header X-MrAdib-Domain "'. $_domain . '";'."\n";
+	$myConf .= "  root /var/www/html/test-arvan-cname/bucket;". "\n\n";
+	$myConf .= '  location / {'."\n";
+	$myConf .= '    try_files $uri $uri/ /index.php$is_args$args;'."\n";
+	$myConf .= '    add_header X-MrAdib-Domain "'. $_domain . '";'."\n";
+	$myConf .= '    add_header X-MrAdib-Domain2 test2";'."\n";
+	$myConf .= '  }'."\n";
+
 	$myConf .= "}";
 
 	// show created config
