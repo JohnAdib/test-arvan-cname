@@ -16,4 +16,11 @@ foreach ($data as $key => $value)
 }
 
 echo "</pre>";
+
+echo "<hr>";
+echo '<h1>$_SERVER</h1>'."\n";
+echo "<pre>";
+print_r($_SERVER);
+echo "</pre>";
+
 ?>
