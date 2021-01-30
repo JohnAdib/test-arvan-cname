@@ -6,7 +6,7 @@ function create_nginx_config($_domain)
 
 	$myConf .= "  server_name ". $_domain . ";"."\n";
 	// set custom header to detect this domain on code
-	$myConf .= "  root /var/www/html/test-arvan-cdn/bucket;". "\n";
+	$myConf .= "  root /var/www/html/test-arvan-cname/bucket;". "\n";
 	$myConf .= '  add_header X-MrAdib-Domain "'. $_domain . '";'."\n";
 	$myConf .= "}";
 
