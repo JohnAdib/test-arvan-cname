@@ -38,6 +38,7 @@ function create_nginx_config($_domain)
 
 	echo("Save config file<br>");
 	file_put_contents('/etc/nginx/sites-available/'. $_domain, $myConf);
+	chmod('/etc/nginx/sites-available/'. $_domain, 0777);
 
 	echo("create shortcut on enable folder<br>");
 	exec("ln -s /etc/nginx/sites-available/". $_domain. " /etc/nginx/sites-enabled/");
