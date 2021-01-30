@@ -1,5 +1,5 @@
 <?php
-function create_nginx_config($_domain)
+function create_nginx_config($_domain, $_bucket)
 {
 	$myConf = "server {". "\n";
 	$myConf .= "  include sites-available/config-mradib.conf;". "\n\n";
@@ -16,7 +16,8 @@ function create_nginx_config($_domain)
 	$myConf .= '    include snippets/fastcgi-php.conf;'."\n";
 	$myConf .= '    fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;'."\n";
 	$myConf .= '    fastcgi_param Dev MrAdib;'."\n";
-	$myConf .= '    fastcgi_param X-MrAdib-Domain "'. $_domain . '";'."\n";
+	$myConf .= '    fastcgi_param X-Domain "'. $_domain. '";'."\n";
+	$myConf .= '    fastcgi_param X-Bucket "'. $_bucket. '";'."\n";
 	$myConf .= '  }'."\n";
 
 

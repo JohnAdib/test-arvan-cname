@@ -4,15 +4,17 @@ require_once "nginx_config.php";
 // show list of domains
 read_domain_list();
 
-if(!isset($_GET['add']))
+if(!isset($_GET['domain']) || !isset($_GET['bucket']))
 {
-	die("Please pass domain on get parameter. for example ?add=s3.talambar.com");
+	die("Please pass domain and bucket on get parameter. for example ?domain=s3.talambar.com&bucket=test1");
 }
 
-$myNewDomain = $_GET['add'];
-if(filter_var(gethostbyname($myNewDomain), FILTER_VALIDATE_IP))
+$myDomain = $_GET['domain'];
+$myBucket = $_GET['bucket'];
+
+if(filter_var(gethostbyname($myDomain), FILTER_VALIDATE_IP))
 {
-	create_nginx_config($myNewDomain);
+	create_nginx_config($myDomain, $myBucket);
 }
 else
 {
