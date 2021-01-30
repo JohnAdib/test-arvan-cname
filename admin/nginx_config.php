@@ -40,12 +40,12 @@ function create_nginx_config($_domain)
 	echo("Save config file<br>");
 	file_put_contents($myFile, $myConf);
 	chmod($myFile, 0777);
-	chown($myFile, 'root');
+	changePermissionToRoot($myFile)
 
 
 	echo("create shortcut on enable folder<br>");
 	exec("ln -s /etc/nginx/sites-available/". $_domain. " /etc/nginx/sites-enabled/");
-	chown('/etc/nginx/sites-enabled/'. $_domain, 'root');
+	changePermissionToRoot('/etc/nginx/sites-enabled/'. $_domain)
 
 	// nginx config reload every minute with cronjob
 }
@@ -68,6 +68,11 @@ function read_domain_list()
 	}
 	echo "</pre>";
 	echo "<hr>";
+}
+
+function changePermissionToRoot($_file)
+{
+	exec('sudo chown root:root '. $_file);
 }
 
 ?>
