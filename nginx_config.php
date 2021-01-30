@@ -13,7 +13,7 @@ function create_nginx_config($_domain)
 	// show created config
 	echo "<pre>". $myConf. "</pre>";
 
-	if(!is_dir('/etc/nginx/site-available/'))
+	if(!is_dir('/etc/nginx/site-available'))
 	{
 		die("We need nginx!");
 	}
@@ -35,6 +35,24 @@ function create_nginx_config($_domain)
 
 	// reload nginx
 	exec("service nginx reload");
+}
+
+function read_domain_list()
+{
+	$domainList = glob("/etc/nginx/site-available/*.conf");
+	echo "<pre>";
+	if($domainList)
+	{
+		foreach ($domainList as $filename)
+		{
+			echo $filename;
+		}
+	}
+	else
+	{
+		echo "There are no domain!";
+	}
+	echo "</pre>";
 }
 
 ?>
